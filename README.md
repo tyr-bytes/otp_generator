@@ -8,8 +8,9 @@ chmod +x submission.py
 
 ###  USAGE  ###
 usage: submission.py [-h] (--generate-qr | --get-otp)
-	--generate-qr generates a .PNG file named "mccabmic_qr" 
-	in the current directory
 
-	--get-otp generates a one-time OTP code
-	that can be used to authenticate
+--generate-qr generates a .PNG file named "mccabmic_qr" 
+in the current directory
+
+--get-otp generates a one-time OTP code
+that can be used to authenticate
