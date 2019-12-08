@@ -69,11 +69,13 @@ def get_otp(secret: str) -> str:
     prints another OTP and keeps on going forever.
     """
 
-    encoded_key_bytes = secret.encode('ascii')
+    key_bytes = secret.encode('ascii')
+    encoded_key_bytes = base64.b32encode(key_bytes)
+    print("for manual entry into GA use: \"{0}\"".format(encoded_key_bytes.decode('ascii')))
     saved_time = datetime.datetime.now()
     saved_time_integer = timecode(saved_time)
 
-    hashed = hmac.new(encoded_key_bytes, int_to_bytes(saved_time_integer), sha1)
+    hashed = hmac.new(key_bytes, int_to_bytes(saved_time_integer), sha1)
     hasher = bytearray(hashed.digest())
     
     # last element
@@ -108,11 +110,13 @@ if __name__ == '__main__':
     
     args = parser.parse_args()
 
+    mysecret = "abcdefghijklmnop"
     if args.generate_qr:
-        print("creating QR with the following info: issuer=\"Auri Smells\", secret=\"cat\", account=\"fake@gmail.com\"")
-        gen_qr(issuer="Auri Smells", secret="cat", account="fake@gmail.com")
+        print("creating QR with the following info: issuer=\"Don Smells\", secret=\"{0}\", account=\"don_is_fat@gmail.com\"".format(mysecret))
+        gen_qr(issuer="Don Smells", secret="abcdefghijklmnop", account="fake@gmail.com")
 
     else:
-        print("creating OTP with the following info: secret=\"cat\"")
-        code = get_otp(secret="cat")
+        
+        print("creating OTP with the following info: secret={0}".format(mysecret))
+        code = get_otp(secret=mysecret)
         print(code)    
